@@ -31,11 +31,11 @@ fn loading_umap() {
     );
 
     // Make sure we can follow references out of the map, just like we can for a regular asset.
-    let imports: Vec<String> = header.package_import_iter().collect();
     assert!(
-        imports.iter().any(|import| import == "/Script/Engine"),
-        "Expected an import referencing /Script/Engine, got {:?}",
-        imports
+        header
+            .package_import_iter()
+            .any(|import| import == "/Script/Engine"),
+        "Expected an import referencing /Script/Engine"
     );
 
     // The map should have at least one export, and one of them should be the World itself.
