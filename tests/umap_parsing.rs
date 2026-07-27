@@ -1,4 +1,4 @@
-use std::fs::File;
+use std::{fs::File, path::Path};
 
 use uasset::{AssetHeader, PackageFlags};
 
@@ -38,10 +38,16 @@ fn loading_umap() {
         "Expected an import referencing /Script/Engine"
     );
 
-    // The map should have at least one export, and one of them should be the World itself.
+    // The map should have at least one export, and one of them should be the World itself,
+    // named after the fixture file (matching Unreal's convention of naming the level's World
+    // object after the package/file name).
     assert!(!header.exports.is_empty(), "Expected at least one export");
+    let map_name = Path::new(path)
+        .file_stem()
+        .and_then(|stem| stem.to_str())
+        .expect("Fixture path should have a valid file stem");
     let world_name_index = header
-        .find_name("NewMap")
+        .find_name(map_name)
         .expect("Missing the map's own name in the name table");
     assert!(
         header
