@@ -22,11 +22,11 @@ fn loading_umap() {
     );
 
     assert!(
-        header.names.contains(&String::from("/Game/NewMap")),
+        header.names.iter().any(|name| name == "/Game/NewMap"),
         "Missing package name in names"
     );
     assert!(
-        header.names.contains(&String::from("PersistentLevel")),
+        header.names.iter().any(|name| name == "PersistentLevel"),
         "Missing PersistentLevel in names"
     );
 

@@ -17,7 +17,7 @@ same way as for any other asset, via `AssetHeader::package_import_iter` and `Ass
 parses a real `.umap` file.
 
 It's designed to work with Unreal Engine assets as old as 4.10 (but might work farther back -- let me know!), and it's intended to be updated to work with the latest engine
-version (at time of writing, that is 4.26).
+version (at time of writing, that is 5.6).
 
 ## Usage
 
