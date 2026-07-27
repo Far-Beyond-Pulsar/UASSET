@@ -10,8 +10,14 @@ uasset supports parsing `.uasset` files from Unreal Engine in pure Rust, to aid 
 boot up an entire editor. Most of the format has been gleaned from Unreal Engine's own parsing code, which you can find in [the official UnrealEngine repo][unrealengine]
 if you have permission. (Specifically, a lot of it was informed by [PackageFileSummary.h][packagefilesummary-h] and [PackageFileSummary.cpp][packagefilesummary-cpp]).
 
+`.umap` files (Unreal Engine level/world packages) use the exact same `FPackageFileSummary` header format as `.uasset` files, so they're already fully
+supported by `AssetHeader::new` -- there's no `.umap`-specific parsing required. You can tell a package is a level by checking whether
+`PackageFlags::ContainsMap` is set in `AssetHeader::package_flags`. Imports and exports (including references to other assets) can be followed the
+same way as for any other asset, via `AssetHeader::package_import_iter` and `AssetHeader::exports`. See `tests/umap_parsing.rs` for an example that
+parses a real `.umap` file.
+
 It's designed to work with Unreal Engine assets as old as 4.10 (but might work farther back -- let me know!), and it's intended to be updated to work with the latest engine
-version (at time of writing, that is 4.26).
+version (at time of writing, that is 5.6).
 
 ## Usage
 
